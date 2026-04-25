@@ -5,4 +5,4 @@ env/
 db.sqlite3
 media/
 static/
-.md
+*.md
