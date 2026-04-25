@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>{{ post.title }}</h2>
+            <p class="text-muted">By {{ post.author.username }} on {{ post.created_at|date:"F d, Y" }}</p>
+            {% if post.images.all %}
+                <div class="mb-3">
+                    {% for img in post.images.all %}
+                        <img src="{{ img.image.url }}" class="img-fluid rounded mb-2" alt="{{ img.caption }}">
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="content mb-4">
+                {{ post.content|linebreaks }}
+            </div>
+            
+            <div class="mb-4">
+                <a href="{% url 'toggle-like' post.slug %}" class="btn btn-success">Like ({{ post.likes_count }})</a>
+                <a href="{% url 'toggle-dislike' post.slug %}" class="btn btn-danger">Dislike ({{ post.dislikes_count }})</a>
+            </div>
+            
+            {% if user == post.author or user.is_superuser %}
+            <div class="mb-4">
+                <a href="{% url 'post-update' post.slug %}" class="btn btn-primary">Edit Post</a>
+                <a href="{% url 'post-delete' post.slug %}" class="btn btn-danger">Delete Post</a>
+            </div>
+            {% endif %}
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to posts</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

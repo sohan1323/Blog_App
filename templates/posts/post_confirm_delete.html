@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Delete Post</h3>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to delete the post "{{ object.title }}"?</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Yes, delete</button>
+                        <a href="{% url 'post-detail' object.slug %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

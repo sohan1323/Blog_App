@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Posts</h2>
+<div class="row">
+    {% for post in posts %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if post.images.first %}
+                <img src="{{ post.images.first.image.url }}" class="card-img-top" alt="Post Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">By {{ post.author.username }} on {{ post.created_at|date:'M d, Y' }}</small><br>
+                    <small class="text-muted">Status: {{ post.get_status_display }}</small><br>
+                    <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm mt-2">Read More</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+</div>
+{% endblock %}
